@@ -1,0 +1,57 @@
+---
+layout: runbook
+title: '#4471 · three problems in one ticket'
+owner: support desk
+status: draft
+reviewed: 2026-10-28
+signature: Ravi N
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+</script>
+
+[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. Its reports show three
+problems. The parser fix repairs one of them.
+
+<Callout kind="warn">
+Not one issue. Each problem below has its own ticket and its own fix.
+</Callout>
+
+## What the reports show
+
+<ProblemTable
+  ticket={4471}
+  issues={{
+    parser: 'https://github.com/navamara55/megadev-w1-c3-what-it-shows/issues/1',
+    hint: 'https://github.com/navamara55/megadev-w1-c3-what-it-shows/issues/2',
+    'one-day': 'https://github.com/navamara55/megadev-w1-c3-what-it-shows/issues/3',
+  }}
+/>
+
+- **`parser`**: the shared parser reads every date month first. Our tenants write the day first,
+  so day and month swap: 2 July becomes 7 February. This is what #4471 describes.
+- **`hint`**: the `booking-v3` form prints `MM/DD/YYYY` under its date field and reads the date
+  day first. People type what the hint says. Only form reports from `booking-v3` tenants.
+  Fixing the parser does not fix the form.
+- **`one-day`**: the date moves by one day, not day for month. The same meeting is Tuesday in
+  Lisbon and Monday in Toronto. That is a time-zone conversion. The desk already noted these
+  as a one-day move ([desk-notes](https://github.com/navamara55/megadev-w1-c3-what-it-shows/blob/main/src/lib/data/desk-notes.json)),
+  but the #4471 table still counts them under `parser`.
+
+## Why one ticket
+
+[Decision 0001](/kb/decisions/0001-dedupe-by-subject) merges on the subject line alone. Every
+subject here says "wrong day" in some form, so every report landed in #4471. The cause depends
+on the tenant, its booking form and the channel the report came through, and the subject says
+none of that. Intake's tag guesses from the reporter's browser, so it does not settle it either.
+
+## How the count works
+
+One id, one report: the ticket export repeats some rows. Each report goes to one problem: a
+report on the desk's one-day list is `one-day`; any other gets its cause from `causes.ts`.
+The table is built from the export at render time.
+
+<RenderStamp {signature} />
