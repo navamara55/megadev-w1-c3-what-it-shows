@@ -1,6 +1,6 @@
 ---
 layout: runbook
-title: '#4471 · three problems in one ticket'
+title: '#4471 · two problems in one ticket'
 owner: support desk
 status: draft
 reviewed: 2026-10-28
@@ -13,11 +13,11 @@ signature: v1.eyJzdWIiOiI3MDQiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdC
   import Callout from '#lib/kb/Callout.svelte';
 </script>
 
-[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. Its reports show three
-problems. The parser fix repairs one of them.
+[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. Its reports hold two
+problems with two different fixes. The parser fix repairs only one of them.
 
 <Callout kind="warn">
-Not one issue. Each problem below has its own ticket and its own fix.
+Not one issue. Each problem below has its own ticket.
 </Callout>
 
 ## What the reports show
@@ -27,19 +27,17 @@ Not one issue. Each problem below has its own ticket and its own fix.
   issues={{
     parser: 'https://github.com/navamara55/megadev-w1-c3-what-it-shows/issues/1',
     hint: 'https://github.com/navamara55/megadev-w1-c3-what-it-shows/issues/2',
-    'one-day': 'https://github.com/navamara55/megadev-w1-c3-what-it-shows/issues/3',
   }}
 />
 
 - **`parser`**: the shared parser reads every date month first. Our tenants write the day first,
-  so day and month swap: 2 July becomes 7 February. This is what #4471 describes.
+  so day and month swap: 2 July becomes 7 February. This is what #4471 describes. A few of
+  these reports describe the date as moved by a day; the desk noted them in `desk-notes.json`.
+  By tenant and channel their cause is the parser, so they count here.
 - **`hint`**: the `booking-v3` form prints `MM/DD/YYYY` under its date field and reads the date
   day first. People type what the hint says. Only form reports from `booking-v3` tenants.
-  Fixing the parser does not fix the form.
-- **`one-day`**: the date moves by one day, not day for month. The same meeting is Tuesday in
-  Lisbon and Monday in Toronto. That is a time-zone conversion. The desk already noted these
-  as a one-day move ([desk-notes](https://github.com/navamara55/megadev-w1-c3-what-it-shows/blob/main/src/lib/data/desk-notes.json)),
-  but the #4471 table still counts them under `parser`.
+  Fixing the parser does not fix the form. The #4471 table marks this cause "no ticket of its
+  own"; it has one now.
 
 ## Why one ticket
 
@@ -50,8 +48,8 @@ none of that. Intake's tag guesses from the reporter's browser, so it does not s
 
 ## How the count works
 
-One id, one report: the ticket export repeats some rows. Each report goes to one problem: a
-report on the desk's one-day list is `one-day`; any other gets its cause from `causes.ts`.
+One id, one report: the ticket export repeats some rows. Each report goes to one problem, its
+cause from `causes.ts`: the tenant's locale, its booking form, and the channel.
 The table is built from the export at render time.
 
 <RenderStamp {signature} />

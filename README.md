@@ -37,7 +37,7 @@ Exported 2026-10-04 from the `support` repo, `apps/kb/` → `src/`.
 
 ## This repo (MEGA.dev S01E03)
 
-- Added page: `src/routes/kb/incidents/4471/problems/+page.svx` (signed), with `src/lib/kb/ProblemTable.svelte` and `src/lib/kb/problems.ts`.
+- Added page: `src/routes/kb/incidents/4471/problems/+page.svx` (signed), with `src/lib/kb/ProblemTable.svelte`.
 - The page as the desk sees it: `build/kb/incidents/4471/problems.html` (`npm install && npm run build`).
 - Build config (`package.json`, `svelte.config.js`, `vite.config.js`, `src/app.html`, `src/routes/+layout.js`) was added to render the export, which ships `src/` alone.
-- Issues #1–#3: one per problem found in desk ticket 4471.
+- Issues #1 (parser) and #2 (hint): one per problem found in desk ticket 4471. #3 closed as a duplicate of #1.
